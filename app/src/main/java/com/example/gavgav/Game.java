@@ -113,7 +113,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
     }
 
     protected void update () {
-        petDog.update(timerInterval); //update в Sprite"aaa"
+        petDog.update(timerInterval); //update в Sprite"aaa" c
         //изменяет х и у
         if (petDog.getX() <= 0) {
             petDog.setX(0);
