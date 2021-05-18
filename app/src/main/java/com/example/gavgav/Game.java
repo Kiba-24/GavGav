@@ -28,7 +28,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
     private int wDog, hDog;
     private float vxDog, vyDog;
     private final int timerInterval = 3;      //задержка между кадрами
-    public Bitmap fullBackground, bowlEat, homeSleep, ballHappy, bushNeed, param, paramBG;
+    public Bitmap fullBackground, bowlEat, homeSleep, ballHappy, bushNeed, param, paramBG, lilParam;
     float clickX, clickY;
     private boolean isDogLeft, isGoToFinger, isFirstTime;
     private int whatObject, coins, newCoins, paramR, paramBGR; //1 - будка, 2 - куст, 3 - мяч, 4 - миска
@@ -81,6 +81,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         //параметры
         param = BitmapFactory.decodeResource(getResources(), R.drawable.param);
         paramBG = BitmapFactory.decodeResource(getResources(), R.drawable.param_bg);
+        lilParam = BitmapFactory.decodeResource(getResources(), R.drawable.param_bg);
         //показ кадров
         petDog.removeFrame(0);
         for (int i = 1; i <= 8; i++) {
@@ -120,6 +121,8 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         param = Bitmap.createScaledBitmap(param, paramR, paramR, true);
         paramBG = Bitmap.createScaledBitmap(paramBG, paramR + paramR/3,
                 paramR + paramR/3, true);
+        lilParam = Bitmap.createScaledBitmap(paramBG, param.getWidth()/3,
+                param.getHeight()/3, true);
 
         canvas.drawBitmap(paramBG, space-paramR/6, viewHeight-space-paramR-paramR/6,  paint);
         canvas.drawBitmap(paramBG, space*2 + paramR -paramR/6,
@@ -136,7 +139,8 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         canvas.drawBitmap(param, space*4 + paramR * 3, viewHeight-space-paramR,  paint);
 
         //canvas.drawCircle(2*space+space/2, viewHeight-space*2-space/2, space/2, paint);
-        canvas.drawBitmap(paramBG, space*2,viewHeight-space*2,  paint);
+        canvas.drawBitmap(lilParam, space*2,viewHeight-space*3,  paint);
+        canvas.drawA
 
 
     }
