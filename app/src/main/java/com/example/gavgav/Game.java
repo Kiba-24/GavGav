@@ -1,6 +1,5 @@
 package com.example.gavgav;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,28 +7,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.AudioManager;
 import android.os.CountDownTimer;
-<<<<<<< Updated upstream
-import android.view.Display;
-=======
 import android.util.Log;
->>>>>>> Stashed changes
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
-import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
-<<<<<<< Updated upstream
-public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callback{
-=======
 
 public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callback {
->>>>>>> Stashed changes
     private Thread mainThread;   //многопоточность
     private SurfaceHolder holder;
     private static volatile boolean running = true;
@@ -37,13 +26,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
     private Sprite petDog;      //сам объект собаки класса Sprite
     private int viewWidth, viewHeight;      //длина и ширина канваса
     private int wDog, hDog;
-<<<<<<< Updated upstream
-    private final int timerInterval = 3;      //задержка между кадрами
-    public Bitmap button_back_png, button_back_click_png, button_settings_png, button_settings_click_png;
-    public Bitmap fullBackground;
-    float clickX, clickY;
-    public Game(Context context) {
-=======
     private float vxDog, vyDog;
     private final int timerInterval = 3;      //задержка между кадрами
     public Bitmap fullBackground, bowlEat, homeSleep, ballHappy, bushNeed, param, paramBG;
@@ -57,7 +39,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
 
     final private int V_DOG = 50;
     public Game(Context context, float leftVolume, float rightVolume) {
->>>>>>> Stashed changes
         super(context);
         this.leftVolume = leftVolume;
         this.rightVolume = rightVolume;
@@ -75,43 +56,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         //делаю фон
 
         fullBackground = BitmapFactory.decodeResource(getResources(), R.drawable.full_background);
-<<<<<<< Updated upstream
-        int widthBG = 1447;
-        int heightBG = 2039;
-        int coef_bg = viewWidth / widthBG;
-        int fullBackground_w = coef_bg * widthBG;
-        int fullBackground_h = coef_bg * heightBG;
-        fullBackground = Bitmap.createScaledBitmap(fullBackground, 1000, 1500, true);
-        //делаю собаку
-        Bitmap dogSprite = BitmapFactory.decodeResource(getResources(), R.drawable.dog_sprite);
-        wDog = dogSprite.getWidth()/5;
-        hDog = dogSprite.getHeight()/5;
-        dogSprite = Bitmap.createScaledBitmap(dogSprite, wDog, hDog, true);
-        Rect firstFrame = new Rect(0, 0, wDog/4, hDog/4);
-        petDog = new Sprite(100,700, 50, 10, firstFrame, dogSprite); //создаём собаку
-        petDog.setFrameTime(100);
-        /*//делаю кнопки меню и настроек
-        button_back_png = BitmapFactory.decodeResource(getResources(), R.drawable.button_back);
-        int button_back_w = button_back_png.getWidth()/17;
-        int button_back_h = button_back_png.getHeight()/17;
-        button_back_png = Bitmap.createScaledBitmap(button_back_png, button_back_w, button_back_h, true);
-        button_back_click_png = BitmapFactory.decodeResource(getResources(), R.drawable.button_back_click); //изменяю размеры второй раз у второй картинки
-        int button_back_click_w = button_back_click_png.getWidth()/17;
-        int button_back_click_h = button_back_click_png.getHeight()/17;
-        button_back_click_png = Bitmap.createScaledBitmap(button_back_click_png, button_back_click_w, button_back_click_h, true);
-        //вторая кнопка
-        button_settings_png = BitmapFactory.decodeResource(getResources(), R.drawable.button_settings); //делаю кнопку и изменяю размеры
-        int button_settings_w = button_settings_png.getWidth()/17;
-        int button_settings_h = button_settings_png.getHeight()/17;
-        button_settings_png = Bitmap.createScaledBitmap(button_settings_png, button_settings_w, button_settings_h, true);
-        button_settings_click_png = BitmapFactory.decodeResource(getResources(), R.drawable.button_settings_click); //изменяю размеры второй раз у второй картинки
-        int button_settings_click_w = button_settings_click_png.getWidth()/17;
-        int button_settings_click_h = button_settings_click_png.getHeight()/17;
-        button_settings_click_png = Bitmap.createScaledBitmap(button_settings_click_png, button_settings_click_w, button_settings_click_h, true);*/
-        //показ кадров
-        for (int i = 1; i <= 4; i++) {
-            petDog.addFrame(new Rect((i-1)*wDog/4, 0, i*wDog/4, hDog/4));
-=======
         //делаю собаку
         Bitmap dogSprite = BitmapFactory.decodeResource(getResources(), R.drawable.dog_sprite);
         wDog = dogSprite.getWidth()/3;
@@ -142,7 +86,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         for (int i = 1; i <= 8; i++) {
             petDog.addFrame(new Rect((i - 1) * (wDog/8), 0, i * (wDog/8), hDog ));
 
->>>>>>> Stashed changes
         }
         Timer t = new Timer();
         t.start();
@@ -155,41 +98,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
     protected void drawing(Canvas canvas) {
         canvas.drawARGB(250, 200, 200, 120);
         Paint paint = new Paint();
-<<<<<<< Updated upstream
-        canvas.drawBitmap(fullBackground, 0, 0, paint);
-        petDog.draw(canvas);
-
-        paint.setAntiAlias(true);
-        paint.setTextSize(55.0f);
-        paint.setColor(Color.WHITE);
-        canvas.drawCircle(10, 600, 50, paint);
-       /* if (isClickBack(clickX, clickY)){
-            canvas.drawText("клик назад", 100, 100, paint);
-        }
-        canvas.drawBitmap(button_back_png, button_back_png.getWidth()/4, button_back_png.getHeight()/4, paint);
-        canvas.drawBitmap(button_settings_png, viewWidth - button_settings_png.getWidth() - button_settings_png.getWidth()/4, button_settings_png.getHeight()/4, paint);*/
-    }
-
-    protected void update () {
-        petDog.update(timerInterval); //update в Sprite
-        //изменяет х и у
-        if (petDog.getX() <= 0) {
-            petDog.setX(1);
-            petDog.setVx(-petDog.getVx());
-        }
-        if (petDog.getY() <= viewHeight / 2) {
-            petDog.setY(viewHeight / 2 + 1);
-            petDog.setVy(-petDog.getVy());
-        }
-        if (petDog.getX() >= viewWidth - wDog) {
-            petDog.setX(viewWidth-1 - wDog);
-            petDog.setVx(-petDog.getVx());
-        }
-        if (petDog.getY() >= viewHeight - hDog) {
-            petDog.setY(viewHeight - 1 - hDog);
-            petDog.setVy(-petDog.getVy());
-        }
-=======
         fullBackground = Bitmap.createScaledBitmap(fullBackground, canvas.getWidth(),
                 canvas.getHeight(), true);
         canvas.drawBitmap(fullBackground, 0, 0, paint);
@@ -227,8 +135,8 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         canvas.drawBitmap(param, space*3 + paramR *2, viewHeight-space-paramR,  paint);
         canvas.drawBitmap(param, space*4 + paramR * 3, viewHeight-space-paramR,  paint);
 
-        canvas.drawCircle(2*space+space/2, viewHeight-space*2-space/2, space/2, paint);
-
+        //canvas.drawCircle(2*space+space/2, viewHeight-space*2-space/2, space/2, paint);
+        canvas.drawBitmap(paramBG, space*2,viewHeight-space*2,  paint);
 
 
     }
@@ -263,7 +171,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
             petDog.setVx(0);                   //потому что палец толстый
             petDog.setVy(0);
         }
->>>>>>> Stashed changes
 //        invalidate();
     }
     @Override
@@ -362,15 +269,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         }
         return false;
     }
-<<<<<<< Updated upstream
-    /* public boolean isClickBack(float clickX, float clickY){
-         if ((clickX < button_back_png.getWidth()/4 + button_back_png.getWidth()) && (clickX > button_back_png.getWidth()/4) && (clickY
-                 < button_back_png.getHeight()/4 + button_back_png.getHeight()) && (clickY > button_back_png.getHeight()/4)){
-             return true;
-         }
-         else { return false;}
-     }*/
-=======
     public boolean isClickBowlEat(float clickX, float clickY){
         if (clickX > viewWidth/4 &&  clickX < viewWidth/4 + bowlEat.getWidth()
                 && clickY> viewHeight /2 && clickY < (viewHeight /2) + bowlEat.getHeight()){
@@ -387,7 +285,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         isFirstTime = true;
     }
 
->>>>>>> Stashed changes
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         mainThread.start();
@@ -410,11 +307,8 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
                 drawing(canvas);
                 update();
                 holder.unlockCanvasAndPost(canvas);
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
             }
         }
     }
@@ -431,15 +325,4 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         }
     }
 
-<<<<<<< Updated upstream
 }
-
-
-
-
-
-
-
-=======
-}
->>>>>>> Stashed changes
