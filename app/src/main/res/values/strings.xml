@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GavGav</string>
+    <string-array name="class_problem">
+        <item>Выбрать уровень сложности</item>
+        <item>Действия с целыми числами от 0 до 10 (1 монета)</item>
+        <item>Действия с целыми числами от 0 до 100 (8 монет)</item>
+        <item>Действия с дробными числами от 0 до 10 (27 монет)</item>
+    </string-array>
 </resources>

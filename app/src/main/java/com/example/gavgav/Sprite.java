@@ -131,16 +131,24 @@ public class Sprite {
         frames.add(frame);
     }
 
+    public void removeFrame (int i) {
+        frames.remove(i);
+    }
+
     public int getFramesCount () {
         return frames.size();
     }
 
 
-    public void update (int ms) {
+    public void update (int ms, boolean isDogLeft) {
         timeForCurrentFrame += ms;
 
         if (timeForCurrentFrame >= frameTime) {
-            currentFrame = (currentFrame + 1) % frames.size();
+            if (isDogLeft) {
+                currentFrame = (currentFrame + 1) % (frames.size()/2);
+            }else{
+                currentFrame = 4 + (currentFrame + 1) % (frames.size()/2);
+            }
             timeForCurrentFrame = timeForCurrentFrame - frameTime;
         }
 
