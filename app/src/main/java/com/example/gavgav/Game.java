@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callback {
-    private Thread mainThread;   //многопоточность
+public class Game extends SurfaceView implements SurfaceHolder.Callback {
+    //поток private Thread mainThread;   //многопоточность
     private SurfaceHolder holder;
     private static volatile boolean running = true;
     private Sound sound;
@@ -43,7 +43,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         this.leftVolume = leftVolume;
         this.rightVolume = rightVolume;
 
-        mainThread = new Thread(this);
+        //поток mainThread = new Thread(this);
         holder = this.getHolder();
         holder.addCallback(this);
 
@@ -91,6 +91,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         Timer t = new Timer();
         t.start();
     }
+
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         viewWidth = w;
@@ -140,7 +141,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
 
         //canvas.drawCircle(2*space+space/2, viewHeight-space*2-space/2, space/2, paint);
         canvas.drawBitmap(lilParam, space*2,viewHeight-space*3,  paint);
-        canvas.drawA
 
 
     }
@@ -175,7 +175,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
             petDog.setVx(0);                   //потому что палец толстый
             petDog.setVy(0);
         }
-//        invalidate();
+
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -288,10 +288,25 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         context.startActivity(intent);
         isFirstTime = true;
     }
+    /*public SurfaceHolder getHolder() {
+        return holder;
+    }*/
+    public void setViewWidth(int viewWidth) {
+        this.viewWidth = viewWidth;
+    }
+    public void setViewHeight(int viewHeight) {
+        this.viewHeight = viewHeight;
+    }
+    public int getViewWidth() {
+        return viewWidth;
+    }
+    public int getViewHeight() {
+        return viewHeight;
+    }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        mainThread.start();
+       //поток mainThread.start();
     }
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
@@ -299,12 +314,18 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
     }
-    @Override
+    public Canvas gameCanvas(){
+        Canvas canvas = holder.lockCanvas();
+        Log.d("aaaa", "gameCan "+canvas+ " " + holder);
+        return canvas;
+    }
+    /*@Override
+    поток
     public void run() {
         while (running){
             Canvas canvas = holder.lockCanvas();
 
-                if (canvas != null) {
+            if (canvas != null) {
                 viewWidth = canvas.getWidth();
                 viewHeight = canvas.getHeight();
 
@@ -315,7 +336,7 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
 
             }
         }
-    }
+    }*/
     class Timer extends CountDownTimer {
         public Timer() {
             super(Integer.MAX_VALUE, timerInterval);
@@ -328,5 +349,6 @@ public class Game extends SurfaceView implements Runnable, SurfaceHolder.Callbac
         public void onFinish() {
         }
     }
+
 
 }
