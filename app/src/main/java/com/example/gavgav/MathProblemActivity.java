@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,9 +23,10 @@ import java.math.RoundingMode;
 
 
 public class MathProblemActivity extends AppCompatActivity {
-    TextView task;
+    TextView task, rAnswers;
     EditText answer;
     Button buttonAnswer;
+    ImageButton btBack;
     Spinner spinner;
     float correctAnswer;
     int difficultyTask;
@@ -45,8 +47,10 @@ public class MathProblemActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
         difficultyTask = spinner.getSelectedItemPosition();
         task = (TextView) findViewById(R.id.task);
+        rAnswers = (TextView) findViewById(R.id.rAnswers);
         answer = (EditText) findViewById(R.id.answer);
         buttonAnswer = (Button) findViewById(R.id.buttonAnswer);
+        btBack = (ImageButton) findViewById(R.id.btBack);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,12 +60,17 @@ public class MathProblemActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "верно", Toast.LENGTH_SHORT).show();
                         newCoins = newCoins + difficultyTask;
 
+
                         rightProblems = rightProblems + 1;
+                        rAnswers.setText("Верныйх ответов: " + rightProblems+"/3");
 
                         makeProblem(difficultyTask);
                     } else {
                         Toast.makeText(getApplicationContext(), "неверно", Toast.LENGTH_SHORT).show();
                     }
+                }
+                else if(v.getId()==R.id.btBack){
+                    goBack(0);
                 }
 
 
@@ -70,6 +79,7 @@ public class MathProblemActivity extends AppCompatActivity {
 
 
         buttonAnswer.setOnClickListener(listener);
+        btBack.setOnClickListener(listener);
 
 
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
