@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        int nc = getIntent().getIntExtra("newCoins", 0);
+        game.newCoins = nc;
+        Log.d("mon", ""+nc);
         gameThread = new GameThread(game);
         gameThread.start();
     }

@@ -33,7 +33,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public Bitmap fullBackground, bowlEat, homeSleep, ballHappy, bushNeed, param, paramBG, lilParam;
     float clickX, clickY;
     private boolean isDogLeft, isGoToFinger, isFirstTime;
-    private int whatObject, coins, newCoins, paramR, paramBGR; //1 - будка, 2 - куст, 3 - мяч, 4 - миска
+    public int whatObject, coins, newCoins, paramR, paramBGR; //1 - будка, 2 - куст, 3 - мяч, 4 - миска
     Intent intent;
     float arcSleep, arcEat, arcNeed, arcHappy;
 
@@ -53,7 +53,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         holder = this.getHolder();
         holder.addCallback(this);
 
-        intent = new Intent(context, MathProblemActivity.class);
 
         sound = new Sound(4, AudioManager.STREAM_MUSIC, 100);
         int soundBark = sound.load(context, R.raw.bark, 1);
@@ -177,7 +176,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     protected void update () {
         petDog.update(timerInterval, isDogLeft); //update в Sprite
         //sound.play(soundBark, 100, 100, 1, 0, 1f);
-        newCoins = intent.getIntExtra("newCoins", 0);
         coins = coins + newCoins;
 
         //изменяет х и у
@@ -240,7 +238,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     }
     public void goToFinger (float clickX, float clickY){
-        Log.d("coins", ""+coins);
+        Log.d("newCoins", ""+newCoins);
         float xDog = (float) petDog.getX() + (wDog/16);
         float yDog = (float) petDog.getY() + (hDog/10);
         float a =  clickX-xDog;
@@ -314,8 +312,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
     public void goToProblem(int whatObject){
         Context context = getContext();
+        intent = new Intent(context, MathProblemActivity.class);
         context.startActivity(intent);
     }
+
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
@@ -339,27 +339,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public int getViewHeight() {
         return viewHeight;
     }
-    /*@Override
-    public void run() {
-        while (running) {
-            canvas = null;
-            canvas = holder.lockCanvas();
-            if (canvas != null) {
-                synchronized (holder) {
-                    viewWidth = canvas.getWidth();
-                    viewHaeight = canvas.getHeight();
 
-                    drawing(canvas);
-                    update();
-                    holder.unlockCanvasAndPost(canvas);
-                }
-
-
-            }
-
-
-        }
-    }*/
     class Timer extends CountDownTimer {
         public Timer() {
             super(Integer.MAX_VALUE, timerInterval);

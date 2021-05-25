@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class MathProblemActivity extends AppCompatActivity {
@@ -51,12 +52,12 @@ public class MathProblemActivity extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.answer);
         buttonAnswer = (Button) findViewById(R.id.buttonAnswer);
         btBack = (ImageButton) findViewById(R.id.btBack);
-        View.OnClickListener listener = new View.OnClickListener() { 
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.buttonAnswer) {
                     String gamerAnswer = answer.getText().toString();
-                    if (Integer.parseInt(gamerAnswer) == correctAnswer) {
+                    if (difficultyTask != 3 && isNumeric(gamerAnswer) && Integer.parseInt(gamerAnswer) == correctAnswer) {
                         Toast.makeText(getApplicationContext(), "верно", Toast.LENGTH_SHORT).show();
                         newCoins = newCoins + difficultyTask;
 
@@ -65,7 +66,18 @@ public class MathProblemActivity extends AppCompatActivity {
                         rAnswers.setText("Верныйх ответов: " + rightProblems+"/3");
 
                         makeProblem(difficultyTask);
-                    } else {
+
+                    } else if(difficultyTask == 3 && isNumeric(gamerAnswer) && Float.parseFloat(gamerAnswer) == correctAnswer){
+                        Toast.makeText(getApplicationContext(), "верно", Toast.LENGTH_SHORT).show();
+                        newCoins = newCoins + difficultyTask;
+
+
+                        rightProblems = rightProblems + 1;
+                        rAnswers.setText("Верныйх ответов: " + rightProblems+"/3");
+
+                        makeProblem(difficultyTask);
+                    }
+                    else {
                         Toast.makeText(getApplicationContext(), "неверно", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -107,60 +119,132 @@ public class MathProblemActivity extends AppCompatActivity {
             answer.setText("");
             switch (difficultyTask) {
                 case 1:
-                    int min1 = 0; // Начальное значение диапазона - "от"
+                    int min1 = -10; // Начальное значение диапазона - "от"
                     int max1 = 10; // Конечное значение диапазона - "до"
-                    int a1 = min1 + (int) (Math.random() * max1);
-                    int b1 = min1 + (int) (Math.random() * max1);
-                    correctAnswer = a1 + b1;
-                    if ((a1 % b1) % 2== 0) {
-                        if(a1 >= b1) {
+                    int a1 = ThreadLocalRandom.current().nextInt(min1, max1 + 1);
+                    int b1 = ThreadLocalRandom.current().nextInt(min1, max1 + 1);
+                    int z1 = min1 + (int) (Math.random() * max1);
+                    if (z1%2==0) { //плюс
+                        if(a1 >= 0 && b1>=0) {
+                            task.setText(a1 + "+" + b1 + "=");
+                            correctAnswer = a1 + b1;
+                        }
+                        else if(a1 >= 0 && b1<0) {
+                            task.setText(a1 + "+(" + b1 + ")=");
+                            correctAnswer = a1 + b1;
+                        }
+                        else if(a1 < 0 && b1<0) {
+                            task.setText(a1 + "+(" + b1 + ")=");
+                            correctAnswer = a1 + b1;
+                        }
+                        else if(a1 < 0 && b1>=0) {
+                            task.setText(a1 + "+" + b1 + "=");
+                            correctAnswer = a1 + b1;
+                        }
+                    } else{ //минус
+                        if(a1 >= 0 && b1>=0) {
                             task.setText(a1 + "-" + b1 + "=");
                             correctAnswer = a1 - b1;
                         }
-                        else{task.setText(b1 + "-" + a1 + "=");
-                            correctAnswer = b1 - a1;}
-                    } else{
-                        task.setText(a1 + "+" + b1 + "=");
-                        correctAnswer = b1 + a1;
+                        else if(a1 >= 0 && b1<0) {
+                            task.setText(a1 + "-(" + b1 + ")=");
+                            correctAnswer = a1 - b1;
+                        }
+                        else if(a1 < 0 && b1<0) {
+                            task.setText(a1 + "-(" + b1 + ")=");
+                            correctAnswer = a1 - b1;
+                        }
+                        else if(a1 < 0 && b1>=0) {
+                            task.setText(a1 + "-" + b1 + "=");
+                            correctAnswer = a1 - b1;
+                        }
                     }
 
                     break;
                 case 2:
-                    int min2 = 0; // Начальное значение диапазона - "от"
+                    int min2 = -100; // Начальное значение диапазона - "от"
                     int max2 = 100; // Конечное значение диапазона - "до"
-                    int a2 = min2 + (int) (Math.random() * max2);
-                    int b2 = min2 + (int) (Math.random() * max2);
-                    correctAnswer = a2 + b2;
-                    if ((a2 % b2) % 2== 0) {
-                        if(a2 >= b2) {
+                    int a2 = ThreadLocalRandom.current().nextInt(min2, max2 + 1);
+                    int b2 = ThreadLocalRandom.current().nextInt(min2, max2 + 1);
+                    int z2 = min2 + (int) (Math.random() * max2);
+                    if (z2%2==0) { //плюс
+                        if(a2 >= 0 && b2>=0) {
+                            task.setText(a2 + "+" + b2 + "=");
+                            correctAnswer = a2 + b2;
+                        }
+                        else if(a2 >= 0 && b2<0) {
+                            task.setText(a2 + "+(" + b2 + ")=");
+                            correctAnswer = a2 + b2;
+                        }
+                        else if(a2 < 0 && b2<0) {
+                            task.setText(a2 + "+(" + b2 + ")=");
+                            correctAnswer = a2 + b2;
+                        }
+                        else if(a2 < 0 && b2>=0) {
+                            task.setText(a2 + "+" + b2 + "=");
+                            correctAnswer = a2 + b2;
+                        }
+                    } else{ //минус
+                        if(a2 >= 0 && b2>=0) {
                             task.setText(a2 + "-" + b2 + "=");
                             correctAnswer = a2 - b2;
                         }
-                        else{task.setText(b2 + "-" + a2 + "=");
-                            correctAnswer = b2 - a2;}
-                    } else{
-                        task.setText(a2 + "+" + b2 + "=");
-                        correctAnswer = b2 + a2;
+                        else if(a2 >= 0 && b2<0) {
+                            task.setText(a2 + "-(" + b2 + ")=");
+                            correctAnswer = a2 - b2;
+                        }
+                        else if(a2 < 0 && b2<0) {
+                            task.setText(a2 + "-(" + b2 + ")=");
+                            correctAnswer = a2 - b2;
+                        }
+                        else if(a2 < 0 && b2>=0) {
+                            task.setText(a2 + "-" + b2 + "=");
+                            correctAnswer = a2 - b2;
+                        }
                     }
                     break;
                 case 3:
-                    int min3 = 0; // Начальное значение диапазона - "от"
+                    int min3 = -10; // Начальное значение диапазона - "от"
                     int max3 = 10; // Конечное значение диапазона - "до"
-                    float a3 = (float) (min3 +  (Math.random() * max3));
-                    float b3 = (float) (min3 +  (Math.random() * max3));
+                    float a3 = ThreadLocalRandom.current().nextInt(min3, max3 + 1);
+                    float b3 = ThreadLocalRandom.current().nextInt(min3, max3 + 1);
                     a3 = (float) round(a3, 1);
                     b3 = (float) round(b3, 1);
-                    correctAnswer =  a3 + b3;
-                    if ((a3 % b3) % 2== 0) {
-                        if(a3 >= b3) {
+                    int z3 = min3 + (int) (Math.random() * max3);
+                    if (z3%2==0) { //плюс
+                        if(a3 >= 0 && b3>=0) {
+                            task.setText(a3 + "+" + b3 + "=");
+                            correctAnswer = a3 + b3;
+                        }
+                        else if(a3 >= 0 && b3<0) {
+                            task.setText(a3 + "+(" + b3 + ")=");
+                            correctAnswer = a3 + b3;
+                        }
+                        else if(a3 < 0 && b3<0) {
+                            task.setText(a3 + "+(" + b3 + ")=");
+                            correctAnswer = a3 + b3;
+                        }
+                        else if(a3 < 0 && b3>=0) {
+                            task.setText(a3 + "+" + b3 + "=");
+                            correctAnswer = a3 + b3;
+                        }
+                    } else{ //минус
+                        if(a3 >= 0 && b3>=0) {
                             task.setText(a3 + "-" + b3 + "=");
                             correctAnswer = a3 - b3;
                         }
-                        else{task.setText(b3 + "-" + a3 + "=");
-                            correctAnswer = b3 - a3;}
-                    } else{
-                        task.setText(a3 + "+" + b3 + "=");
-                        correctAnswer = b3 + a3;
+                        else if(a3 >= 0 && b3<0) {
+                            task.setText(a3 + "-(" + b3 + ")=");
+                            correctAnswer = a3 - b3;
+                        }
+                        else if(a3 < 0 && b3<0) {
+                            task.setText(a3 + "-(" + b3 + ")=");
+                            correctAnswer = a3 - b3;
+                        }
+                        else if(a3 < 0 && b3>=0) {
+                            task.setText(a3 + "-" + b3 + "=");
+                            correctAnswer = a3 - b3;
+                        }
                     }
                     break;
 
@@ -180,11 +264,19 @@ public class MathProblemActivity extends AppCompatActivity {
         return bd.doubleValue();
     }
     private void goBack(int newCoins){
-        Intent i = new Intent();
         Log.d("go home", "" + newCoins + " " + rightProblems);
+        Intent i = new Intent(MathProblemActivity.this, MainActivity.class);
         i.putExtra("newCoins", newCoins);
         setResult(RESULT_OK, i);
         finish();
+    }
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 
 
