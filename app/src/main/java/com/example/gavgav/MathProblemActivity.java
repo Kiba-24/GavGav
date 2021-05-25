@@ -51,7 +51,7 @@ public class MathProblemActivity extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.answer);
         buttonAnswer = (Button) findViewById(R.id.buttonAnswer);
         btBack = (ImageButton) findViewById(R.id.btBack);
-        View.OnClickListener listener = new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() { 
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.buttonAnswer) {

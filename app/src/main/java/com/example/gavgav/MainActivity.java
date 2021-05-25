@@ -52,7 +52,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         gameThread = new GameThread(game);
-        gameThread.run();
+        gameThread.start();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameThread.requestStop();
+        try {
+            gameThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     //ничего не работает :)
 }

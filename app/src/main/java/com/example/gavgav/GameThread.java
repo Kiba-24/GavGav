@@ -7,12 +7,9 @@ import android.view.SurfaceHolder;
 
 public class GameThread  extends Thread {
     private Game game;
-    private static volatile boolean running = true;
+    private volatile boolean running = true;
     public GameThread (Game g){
         game = g;
-
-
-
     }
 
     @Override
@@ -23,9 +20,8 @@ public class GameThread  extends Thread {
         while (running){
             Canvas canvas = game.getHolder().lockCanvas();
 
-            Log.d("aaaa", "run "+canvas+" " + game.getHolder());
             if (canvas != null) {
-                Log.d("aaaa", "run");
+
                 game.setViewWidth(canvas.getWidth());
                 game.setViewHeight(canvas.getHeight());
 
@@ -37,6 +33,10 @@ public class GameThread  extends Thread {
             }
         }
         super.run();
+    }
+
+    public void requestStop(){
+        running = false;
     }
 
 
