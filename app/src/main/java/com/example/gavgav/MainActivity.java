@@ -1,43 +1,58 @@
 package com.example.gavgav;
 
-import android.graphics.Canvas;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
 
-public class GameThread  extends Thread {
-    private Game game;
-    private static volatile boolean running = true;
-    public GameThread (Game g){
-       game = g;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
+public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = "MainActivity";
+    //ImageButton button_back, button_settings;
+    Game game;
+    public float leftVolume,rightVolume;
+    public int screenW, screenH;
+    GameThread gameThread;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //setContentView( R.layout.activity_main);
+        //setContentView(new Game(this));
+        //Log.d(LOG_TAG, "Main ");
+
+        //setContentView( R.layout.activity_main);
+
+
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        float curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        leftVolume = curVolume / maxVolume;
+        rightVolume = curVolume / maxVolume;
+        game = new Game(this, leftVolume, rightVolume);
+        setContentView(game);
 
 
     }
 
     @Override
-    public void run() {
-
-
-
-        while (running){
-            Canvas canvas = game.gameCanvas();
-
-            Log.d("aaaa", "run "+canvas+" " + game.getHolder());
-            if (canvas != null) {
-                Log.d("aaaa", "run");
-                game.setViewWidth(canvas.getWidth());
-                game.setViewHeight(canvas.getHeight());
-
-                game.drawing(canvas);
-                game.update();
-                game.getHolder().unlockCanvasAndPost(canvas);
-
-
-            }
-        }
-        super.run();
+    protected void onResume() {
+        super.onResume();
+        gameThread = new GameThread(game);
+        gameThread.run();
     }
-
-
+    //ничего не работает :)
 }
