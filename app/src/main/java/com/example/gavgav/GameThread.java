@@ -9,7 +9,7 @@ public class GameThread  extends Thread {
     private Game game;
     private static volatile boolean running = true;
     public GameThread (Game g){
-       game = g;
+        game = g;
 
 
 
@@ -21,7 +21,7 @@ public class GameThread  extends Thread {
 
 
         while (running){
-            Canvas canvas = game.gameCanvas();
+            Canvas canvas = game.getHolder().lockCanvas();
 
             Log.d("aaaa", "run "+canvas+" " + game.getHolder());
             if (canvas != null) {
