@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,13 +11,28 @@
         android:orientation="vertical"
         android:background="@drawable/paper">
 
-        <Spinner
-            android:id="@+id/spinnerClass"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="0.3"
-            android:entries="@array/class_problem"
-            android:scrollbarSize="500px" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <Spinner
+                android:id="@+id/spinnerClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:entries="@array/class_problem"
+                android:scrollbarSize="500px" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -49,6 +65,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2" />
+
+        <TextView
+            android:id="@+id/rAnswers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Верныйх ответов: 0/3"
+            android:textAlignment="textEnd" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" />
 
         <Button
             android:id="@+id/buttonAnswer"
