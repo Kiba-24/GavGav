@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import java.io.IOException;
+
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
-    //поток private Thread mainThread;   //многопоточность
+   // private Thread mainThread;   //многопоточность
     private SurfaceHolder holder;
     private static volatile boolean running = true;
     private Sound sound;
@@ -33,6 +35,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private boolean isDogLeft, isGoToFinger, isFirstTime;
     private int whatObject, coins, newCoins, paramR, paramBGR; //1 - будка, 2 - куст, 3 - мяч, 4 - миска
     Intent intent;
+    float arcSleep, arcEat, arcNeed, arcHappy;
+
+    private boolean cLocked = false;//canvas
+    Canvas canvas;
 
     //int soundBark;
     float leftVolume, rightVolume;
@@ -43,7 +49,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.leftVolume = leftVolume;
         this.rightVolume = rightVolume;
 
-        //поток mainThread = new Thread(this);
+       // mainThread = new Thread(this);
         holder = this.getHolder();
         holder.addCallback(this);
 
@@ -84,6 +90,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         lilParam = BitmapFactory.decodeResource(getResources(), R.drawable.param_bg);
         //показ кадров
         petDog.removeFrame(0);
+        arcSleep = 0;
+        arcEat = 0;
+        arcNeed = 0;
+        arcHappy = 0;
         for (int i = 1; i <= 8; i++) {
             petDog.addFrame(new Rect((i - 1) * (wDog/8), 0, i * (wDog/8), hDog ));
 
@@ -91,7 +101,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         Timer t = new Timer();
         t.start();
     }
-
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         viewWidth = w;
@@ -100,6 +109,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     protected void drawing(Canvas canvas) {
         canvas.drawARGB(250, 200, 200, 120);
         Paint paint = new Paint();
+        Paint paintArc = new Paint();
         fullBackground = Bitmap.createScaledBitmap(fullBackground, canvas.getWidth(),
                 canvas.getHeight(), true);
         canvas.drawBitmap(fullBackground, 0, 0, paint);
@@ -111,14 +121,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         petDog.draw(canvas);
         paint.setAntiAlias(true);
         paint.setTextSize(55.0f);
-        paint.setColor(Color.WHITE);
+        paint.setColor(getResources().getColor(R.color.colorPrimary));
+        paintArc.setColor(Color.WHITE);
         viewHeight = canvas.getHeight();
         viewWidth = canvas.getWidth();
         canvas.drawText(String.valueOf(coins), 50, 50, paint);
 
-        int space = viewWidth/17;
-        paramR = space * 3;
-        paramBGR = paramR + paramR/3;
+        int space = viewWidth/13;
+        paramR = space * 2;
+        paramBGR = paramR + paramR/2;
         param = Bitmap.createScaledBitmap(param, paramR, paramR, true);
         paramBG = Bitmap.createScaledBitmap(paramBG, paramR + paramR/3,
                 paramR + paramR/3, true);
@@ -140,7 +151,25 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(param, space*4 + paramR * 3, viewHeight-space-paramR,  paint);
 
         //canvas.drawCircle(2*space+space/2, viewHeight-space*2-space/2, space/2, paint);
-        canvas.drawBitmap(lilParam, space*2,viewHeight-space*3,  paint);
+        /*canvas.drawBitmap(lilParam, space*2,viewHeight-space*3,  paint);
+        canvas.drawBitmap(lilParam, space*6,viewHeight-space*3,  paint);
+        canvas.drawBitmap(lilParam, space*10,viewHeight-space*3,  paint);
+        canvas.drawBitmap(lilParam, space*14,viewHeight-space*3,  paint);*/
+        canvas.drawText("сон", space*16/10, viewHeight-space/4,  paint);
+        canvas.drawText("еда", paramR+space*26/10, viewHeight-space/4,  paint);
+        canvas.drawText("нужда", paramR*2+space*36/12, viewHeight-space/4,  paint);
+        canvas.drawText("счастье", paramR*3+space*46/11, viewHeight-space/4,  paint);
+
+
+
+        canvas.drawArc(space, viewHeight-space-paramR, space*3, viewHeight-space-paramR+param.getHeight(),
+                0, arcSleep, true, paintArc);
+        canvas.drawArc(space*2 + paramR, viewHeight-space-paramR,  paramR +space*4,
+                viewHeight-space-paramR+param.getHeight(),0, arcEat, true, paintArc);
+        canvas.drawArc(space*3 + paramR*2, viewHeight-space-paramR,  paramR +space*7,
+                viewHeight-space-paramR+param.getHeight(),0, arcNeed, true, paintArc);
+        canvas.drawArc(space*4 + paramR*3, viewHeight-space-paramR,  paramR +space*10,
+                viewHeight-space-paramR+param.getHeight(),0, arcHappy, true, paintArc);
 
 
     }
@@ -175,7 +204,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             petDog.setVx(0);                   //потому что палец толстый
             petDog.setVy(0);
         }
-
+//        invalidate();
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -286,11 +315,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void goToProblem(int whatObject){
         Context context = getContext();
         context.startActivity(intent);
-        isFirstTime = true;
     }
-    /*public SurfaceHolder getHolder() {
-        return holder;
-    }*/
+
+    @Override
+    public void surfaceCreated(@NonNull SurfaceHolder holder) {
+
+    }
+    @Override
+    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+    }
+    @Override
+    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+    }
     public void setViewWidth(int viewWidth) {
         this.viewWidth = viewWidth;
     }
@@ -303,38 +339,25 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public int getViewHeight() {
         return viewHeight;
     }
-
-    @Override
-    public void surfaceCreated(@NonNull SurfaceHolder holder) {
-       //поток mainThread.start();
-    }
-    @Override
-    public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-    }
-    @Override
-    public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
-    }
-    public Canvas gameCanvas(){
-        Canvas canvas = holder.lockCanvas();
-        Log.d("aaaa", "gameCan "+canvas+ " " + holder);
-        return canvas;
-    }
     /*@Override
-    поток
     public void run() {
-        while (running){
-            Canvas canvas = holder.lockCanvas();
-
+        while (running) {
+            canvas = null;
+            canvas = holder.lockCanvas();
             if (canvas != null) {
-                viewWidth = canvas.getWidth();
-                viewHeight = canvas.getHeight();
+                synchronized (holder) {
+                    viewWidth = canvas.getWidth();
+                    viewHaeight = canvas.getHeight();
 
-                drawing(canvas);
-                update();
-                holder.unlockCanvasAndPost(canvas);
+                    drawing(canvas);
+                    update();
+                    holder.unlockCanvasAndPost(canvas);
+                }
 
 
             }
+
+
         }
     }*/
     class Timer extends CountDownTimer {
@@ -344,11 +367,33 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         @Override
         public void onTick(long millisUntilFinished) {
             update ();
+            if (arcEat <=360) {
+                arcEat = (float) (arcEat + 0.005);
+            } else{
+                Toast.makeText(getContext(), "пора есть!", Toast.LENGTH_SHORT).show();
+            }
+
+            if (arcSleep <=360) {
+                arcSleep = (float) (arcSleep + 0.005);
+            } else{
+                Toast.makeText(getContext(), "пора спать!", Toast.LENGTH_SHORT).show();
+            }
+
+            if (arcNeed <=360) {
+                arcNeed = (float) (arcNeed + 0.005);
+            } else{
+                Toast.makeText(getContext(), "пора в туалет!", Toast.LENGTH_SHORT).show();
+            }
+            if (arcHappy <=360) {
+                arcHappy = (float) (arcHappy + 0.005);
+            } else{
+                Toast.makeText(getContext(), "пора играть!", Toast.LENGTH_SHORT).show();
+            }
+
         }
         @Override
         public void onFinish() {
         }
     }
-
 
 }
