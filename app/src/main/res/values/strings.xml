@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GavGav</string>
+    <string name="app_name">sobaka</string>
     <string-array name="class_problem">
         <item>Выбрать уровень сложности</item>
         <item>Действия с целыми числами от -10 до 10 (1 монета)</item>

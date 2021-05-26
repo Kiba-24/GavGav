@@ -3,9 +3,11 @@ package com.example.gavgav;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,25 +18,35 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MainActivity";
+    public static Game game;
     //ImageButton button_back, button_settings;
-    Game game;
     public float leftVolume,rightVolume;
     public int screenW, screenH;
     GameThread gameThread;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //setContentView( R.layout.activity_main);
         //setContentView(new Game(this));
         //Log.d(LOG_TAG, "Main ");
 
         //setContentView( R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
 
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -51,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int nc = getIntent().getIntExtra("newCoins", 0);
-        game.newCoins = nc;
-        Log.d("mon", ""+nc);
         gameThread = new GameThread(game);
         gameThread.start();
     }

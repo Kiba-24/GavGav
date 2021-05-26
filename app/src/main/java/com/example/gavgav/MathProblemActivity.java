@@ -22,6 +22,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.example.gavgav.MainActivity.game;
+
 
 public class MathProblemActivity extends AppCompatActivity {
     TextView task, rAnswers;
@@ -38,6 +40,7 @@ public class MathProblemActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math_problem);
+        Game game = MainActivity.game;
         newCoins = 0;
         rightProblems = 0;
         spinner = findViewById(R.id.spinnerClass);
@@ -59,7 +62,8 @@ public class MathProblemActivity extends AppCompatActivity {
                     String gamerAnswer = answer.getText().toString();
                     if (difficultyTask != 3 && isNumeric(gamerAnswer) && Integer.parseInt(gamerAnswer) == correctAnswer) {
                         Toast.makeText(getApplicationContext(), "верно", Toast.LENGTH_SHORT).show();
-                        newCoins = newCoins + difficultyTask;
+                        newCoins = newCoins + (int)Math.pow(difficultyTask, 3);
+                        Log.d("coins ", newCoins + " "+difficultyTask);
 
 
                         rightProblems = rightProblems + 1;
@@ -265,9 +269,24 @@ public class MathProblemActivity extends AppCompatActivity {
     }
     private void goBack(int newCoins){
         Log.d("go home", "" + newCoins + " " + rightProblems);
-        Intent i = new Intent(MathProblemActivity.this, MainActivity.class);
-        i.putExtra("newCoins", newCoins);
-        setResult(RESULT_OK, i);
+        int whatO = game.getWhatObject();
+        if (rightProblems == 3){
+            switch (whatO) { //1 - будка, 2 - куст, 3 - мяч, 4 - миска
+                case 1:
+                    game.setArcSleep(0);
+                    break;
+                case 2:
+                    game.setArcNeed(0);
+                    break;
+                case 3:
+                    game.setArcHappy(0);
+                    break;
+                case 4:
+                    game.setArcEat(0);
+                    break;
+            }
+        }
+        game.setNewCoins(newCoins);
         finish();
     }
     public static boolean isNumeric(String str) {
