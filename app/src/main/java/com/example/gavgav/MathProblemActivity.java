@@ -2,6 +2,7 @@ package com.example.gavgav;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +30,7 @@ public class MathProblemActivity extends AppCompatActivity {
     TextView task, rAnswers;
     EditText answer;
     Button buttonAnswer;
-    ImageButton btBack;
+    ImageButton btBack, btWeb;
     Spinner spinner;
     float correctAnswer;
     int difficultyTask;
@@ -55,6 +56,7 @@ public class MathProblemActivity extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.answer);
         buttonAnswer = (Button) findViewById(R.id.buttonAnswer);
         btBack = (ImageButton) findViewById(R.id.btBack);
+        btWeb = (ImageButton) findViewById(R.id.btWeb);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +90,10 @@ public class MathProblemActivity extends AppCompatActivity {
                 else if(v.getId()==R.id.btBack){
                     goBack(0);
                 }
+                else if(v.getId()==R.id.btWeb){
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://ibb.co/H7shR7D"));
+                    startActivity(intent);
+                }
 
 
             }
@@ -96,6 +102,7 @@ public class MathProblemActivity extends AppCompatActivity {
 
         buttonAnswer.setOnClickListener(listener);
         btBack.setOnClickListener(listener);
+        btWeb.setOnClickListener(listener);
 
 
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
