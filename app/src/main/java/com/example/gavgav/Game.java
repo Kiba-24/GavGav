@@ -416,6 +416,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             } else{
                 if(!isFirstEat) {
                     Toast.makeText(getContext(), "пора есть!", Toast.LENGTH_SHORT).show();
+                    coins = coins - 15;
                     isFirstEat = true;
                 }
             }
@@ -426,6 +427,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             } else{
                 if (!isFirstSleep) {
                     Toast.makeText(getContext(), "пора спать!", Toast.LENGTH_SHORT).show();
+                    coins = coins - 15;
                     isFirstSleep = true;
                 }
             }
@@ -436,6 +438,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             } else{
                 if(!isFirstNeed) {
                     Toast.makeText(getContext(), "пора в туалет!", Toast.LENGTH_SHORT).show();
+                    coins = coins - 15;
                     isFirstNeed = true;
                 }
             }
@@ -445,6 +448,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             } else{
                 if(!isFirstHappy) {
                     Toast.makeText(getContext(), "пора играть!", Toast.LENGTH_SHORT).show();
+                    coins = coins - 15;
                     isFirstHappy = true;
                 }
             }
