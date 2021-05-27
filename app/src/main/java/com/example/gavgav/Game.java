@@ -43,11 +43,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-
-    //int soundBark;
     float leftVolume, rightVolume;
 
-    final private int V_DOG = 50;
+    final private int V_DOG = 75;
     public Game(Context context, float leftVolume, float rightVolume) {
         super(context);
         this.leftVolume = leftVolume;
@@ -147,7 +145,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paramBG = Bitmap.createScaledBitmap(paramBG, paramR + paramR/3,
                 paramR + paramR/3, true);
 
-
         canvas.drawBitmap(paramBG, space-paramR/6, viewHeight-space-paramR-paramR/6,  paint);
         canvas.drawBitmap(paramBG, space*2 + paramR -paramR/6,
                 viewHeight-space-paramR-paramR/6,  paint);
@@ -246,7 +243,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             petDog.setVy(0);
 
         }
-//        invalidate();
+
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
