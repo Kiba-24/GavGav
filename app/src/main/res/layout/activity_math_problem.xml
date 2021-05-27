@@ -46,50 +46,30 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
-
         <TextView
             android:id="@+id/task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="100px"
-            android:text="Вопрос" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3" />
+            android:layout_weight="0.5"
+            android:text="Вопрос"
+            android:textSize="100px" />
 
         <EditText
             android:id="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Ответ" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2" />
 
         <TextView
             android:id="@+id/rAnswers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:text="Верныйх ответов: 0/3"
+            android:text="Верных ответов: 0/3"
             android:textAlignment="textEnd" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3" />
 
         <Button
             android:id="@+id/buttonAnswer"
@@ -97,6 +77,26 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:text="Готово" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

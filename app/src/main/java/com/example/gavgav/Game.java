@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
    // private Thread mainThread;   //многопоточность
@@ -40,6 +42,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private boolean isFirstEat, isFirstSleep, isFirstNeed, isFirstHappy;
     private float speedArcParam = (float) 0.005;
     private boolean isFirstGav;
+    private long startTime;
+    private boolean isStart = true; //начало ли игры
 
 
 
@@ -47,6 +51,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     final private int V_DOG = 75;
     public Game(Context context, float leftVolume, float rightVolume) {
+
         super(context);
         this.leftVolume = leftVolume;
         this.rightVolume = rightVolume;
@@ -58,6 +63,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         sound = new Sound(4, AudioManager.STREAM_MUSIC, 100);
         soundBark = sound.load(context, R.raw.bark, 1);
+
+        startTime = System.currentTimeMillis();
 
         isDogLeft = false;
         //делаю фон
@@ -209,6 +216,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                     viewHeight-space-paramR+param.getHeight(),0, arcHappy, true, paintArc);
 
         }
+        if (isStart){
+           if (System.currentTimeMillis() - startTime <= 10000) {
+               canvas.drawText("сон", 20, canvas.getHeight() / 5, paint);
+               canvas.drawText("еда", canvas.getWidth() / 4, canvas.getHeight() / 2, paint);
+               canvas.drawText("нужда", canvas.getWidth() / 7 * 5, canvas.getHeight() / 5, paint);
+               canvas.drawText("счастье", canvas.getWidth() / 3 * 2, canvas.getHeight() / 3 * 2, paint);
+           }else{
+               isStart = false;
+           }
+
+        }
+
     }
 
     protected void update () {

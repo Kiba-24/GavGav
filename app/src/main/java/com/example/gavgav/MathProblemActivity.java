@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -57,6 +59,8 @@ public class MathProblemActivity extends AppCompatActivity {
         buttonAnswer = (Button) findViewById(R.id.buttonAnswer);
         btBack = (ImageButton) findViewById(R.id.btBack);
         btWeb = (ImageButton) findViewById(R.id.btWeb);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +73,7 @@ public class MathProblemActivity extends AppCompatActivity {
 
 
                         rightProblems = rightProblems + 1;
-                        rAnswers.setText("Верныйх ответов: " + rightProblems+"/3");
+                        rAnswers.setText("Верных ответов: " + rightProblems+"/3");
 
                         makeProblem(difficultyTask);
 
@@ -79,7 +83,7 @@ public class MathProblemActivity extends AppCompatActivity {
 
 
                         rightProblems = rightProblems + 1;
-                        rAnswers.setText("Верныйх ответов: " + rightProblems+"/3");
+                        rAnswers.setText("Верных ответов: " + rightProblems+"/3");
 
                         makeProblem(difficultyTask);
                     }
