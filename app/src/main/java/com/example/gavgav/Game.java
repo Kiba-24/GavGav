@@ -39,6 +39,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private float arcSleep, arcEat, arcNeed, arcHappy;
     private boolean isFirstEat, isFirstSleep, isFirstNeed, isFirstHappy;
     private float speedArcParam = (float) 0.005;
+    private boolean isFirstGav;
 
 
 
@@ -308,9 +309,16 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         int y = (int) clickY;
         if (dog.contains(x, y))
         {
-            sound.play(soundBark, leftVolume, rightVolume, 1, 0, 1f);
+            if (!isFirstGav){
+                sound.play(soundBark, leftVolume, rightVolume, 1, 0, 1f);
+                isFirstGav = true;
+            }
+
             return true;
-        }else {return false;}
+        }else {
+            isFirstGav = false;
+            return false;
+        }
     }
 
 
