@@ -91,7 +91,8 @@ public class MathProblemActivity extends AppCompatActivity {
                     goBack(0);
                 }
                 else if(v.getId()==R.id.btWeb){
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://ibb.co/H7shR7D"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://i.piccy.info/i9/506882fb8e82dd45aeadcab80db969d5/1622112898/60734/1430955/951bb0052f16ae74d90e4d0bed5376c4.jpg"));
                     startActivity(intent);
                 }
 
