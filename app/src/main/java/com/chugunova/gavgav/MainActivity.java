@@ -1,29 +1,16 @@
-package com.example.gavgav;
+package com.chugunova.gavgav;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MainActivity";

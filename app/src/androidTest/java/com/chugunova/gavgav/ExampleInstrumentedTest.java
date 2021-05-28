@@ -1,4 +1,4 @@
-package com.example.gavgav;
+package com.chugunova.gavgav;
 
 import android.content.Context;
 

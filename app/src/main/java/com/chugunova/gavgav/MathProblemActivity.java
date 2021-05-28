@@ -1,6 +1,5 @@
-package com.example.gavgav;
+package com.chugunova.gavgav;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,13 +7,11 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +23,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.example.gavgav.MainActivity.game;
+import static com.chugunova.gavgav.MainActivity.game;
 
 
 public class MathProblemActivity extends AppCompatActivity {

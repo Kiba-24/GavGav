@@ -1,4 +1,4 @@
-package com.example.gavgav;
+package com.chugunova.gavgav;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.AudioManager;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,11 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-
-import static com.example.gavgav.MainActivity.window;
+import static com.chugunova.gavgav.MainActivity.window;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
    // private Thread mainThread;   //многопоточность
