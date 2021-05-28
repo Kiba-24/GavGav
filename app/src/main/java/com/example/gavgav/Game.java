@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import androidx.annotation.NonNull;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.example.gavgav.MainActivity.window;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
    // private Thread mainThread;   //многопоточность
@@ -44,6 +47,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private boolean isFirstGav;
     private long startTime;
     public boolean isStart = true; //начало ли игры
+    float firstX;
+    float firstY;
 
 
 
@@ -132,7 +137,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(ballHappy, canvas.getWidth() / 3 * 2, canvas.getHeight() / 3 * 2, paint);
         canvas.drawBitmap(bushNeed, canvas.getWidth()/7 * 5, canvas.getHeight()/5, paint);
 
-        petDog.draw(canvas);
+
         paint.setAntiAlias(true);
         paint.setTextSize(55.0f);
         paint.setColor(getResources().getColor(R.color.colorPrimary));
@@ -217,21 +222,26 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         }
         if (isStart){
-           if (System.currentTimeMillis() - startTime <= 15000) {
+           if (System.currentTimeMillis() - startTime <= 10000) {
                canvas.drawText("сон", 20, canvas.getHeight() / 5, paint);
-               canvas.drawText("еда", canvas.getWidth() / 4, canvas.getHeight() / 2, paint);
-               canvas.drawText("нужда", canvas.getWidth() / 7 * 5, canvas.getHeight() / 5, paint);
-               canvas.drawText("счастье", canvas.getWidth() / 3 * 2, canvas.getHeight() / 3 * 2, paint);
+               canvas.drawText("еда", canvas.getWidth() / 4, canvas.getHeight() / 2,
+                       paint);
+               canvas.drawText("нужда", canvas.getWidth() / 7 * 5,
+                       canvas.getHeight() / 5, paint);
+               canvas.drawText("счастье", canvas.getWidth() / 3 * 2,
+                       canvas.getHeight() / 3 * 2, paint);
            }else{
                isStart = false;
            }
 
         }
+        petDog.draw(canvas);
 
     }
 
     protected void update () {
         petDog.update(timerInterval, isDogLeft); //update в Sprite
+
         if (newCoins>0) {
             coins = coins + newCoins;
             newCoins = 0;
@@ -271,6 +281,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 isGoToFinger = true;
+                firstX = clickX;
+                firstY = clickY;
                 if (isGoToFinger) {
                     goToFinger(clickX, clickY);
                 }
@@ -281,8 +293,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 if (isGoToFinger) {
                     goToFinger(clickX, clickY);
                 }
+
                 break;
             case MotionEvent.ACTION_UP:
+                clickX = event.getX();
+                clickY = event.getY();
                 isGoToFinger = false;
                 petDog.setVy(vyDog);
                 petDog.setVx(vxDog);
@@ -290,6 +305,19 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 isClickBushNeed(clickX, clickY);
                 isClickBallHappy(clickX, clickY);
                 isClickBowlEat(clickX, clickY);
+                if (Math.abs(clickX - firstX) < bowlEat.getWidth() &&
+                        firstY - clickY > bushNeed.getHeight()) {
+                    showSystemUI();
+                } else{
+                    hideSystemUI();
+                }
+
+
+
+                firstX = 0;
+                firstY = 0;
+                clickY = 0;
+                clickX = 0;
                 break;
         }
         return true;
@@ -416,6 +444,23 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
     public void setArcEat(float arcEat) { //4
         this.arcEat = arcEat;
+    }
+    private void hideSystemUI() {
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // прячем панель навигации
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // прячем строку состояния
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    }
+
+    // Программно выводим системные панели обратно
+    private void showSystemUI() {
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
 

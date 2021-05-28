@@ -31,12 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     public float leftVolume,rightVolume;
     public static final String APP_PREFERENCES = "data";
+    public static Window window;
     GameThread gameThread;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        window = getWindow();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
@@ -92,5 +93,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //ничего не работает :)
+    //всё работает :)
 }

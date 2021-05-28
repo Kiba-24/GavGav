@@ -6,4 +6,5 @@
         <item>Целые числа от -100 до 100 (2 монеты)</item>
         <item>Дробные числа от -10 до 10 (3 монеты)</item>
     </string-array>
+    <string name="uri">http://i.piccy.info/i9/506882fb8e82dd45aeadcab80db969d5/1622112898/60734/1430955/951bb0052f16ae74d90e4d0bed5376c4.jpg</string>
 </resources>

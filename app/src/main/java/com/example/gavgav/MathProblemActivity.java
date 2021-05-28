@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -56,6 +57,8 @@ public class MathProblemActivity extends AppCompatActivity {
         task = (TextView) findViewById(R.id.task);
         rAnswers = (TextView) findViewById(R.id.rAnswers);
         answer = (EditText) findViewById(R.id.answer);
+        answer.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL|
+                InputType.TYPE_NUMBER_FLAG_SIGNED);
         buttonAnswer = (Button) findViewById(R.id.buttonAnswer);
         btBack = (ImageButton) findViewById(R.id.btBack);
         btWeb = (ImageButton) findViewById(R.id.btWeb);
@@ -96,7 +99,7 @@ public class MathProblemActivity extends AppCompatActivity {
                 }
                 else if(v.getId()==R.id.btWeb){
                     Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://i.piccy.info/i9/506882fb8e82dd45aeadcab80db969d5/1622112898/60734/1430955/951bb0052f16ae74d90e4d0bed5376c4.jpg"));
+                            Uri.parse(getString(R.string.uri)));
                     startActivity(intent);
                 }
 
@@ -182,7 +185,7 @@ public class MathProblemActivity extends AppCompatActivity {
                     int max2 = 100; // Конечное значение диапазона - "до"
                     int a2 = ThreadLocalRandom.current().nextInt(min2, max2 + 1);
                     int b2 = ThreadLocalRandom.current().nextInt(min2, max2 + 1);
-                    int z2 = min2 + (int) (Math.random() * max2);
+                    int z2 = min2 + (int) (Math.random() * max2); //знак
                     if (z2%2==0) { //плюс
                         if(a2 >= 0 && b2>=0) {
                             task.setText(a2 + "+" + b2 + "=");
