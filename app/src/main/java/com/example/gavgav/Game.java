@@ -38,12 +38,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private boolean isDogLeft, isGoToFinger, isFirstTime;
     public int whatObject, coins, newCoins, paramR, paramBGR; //1 - будка, 2 - куст, 3 - мяч, 4 - миска
     Intent intent;
-    private float arcSleep, arcEat, arcNeed, arcHappy;
+    public float arcSleep, arcEat, arcNeed, arcHappy;
     private boolean isFirstEat, isFirstSleep, isFirstNeed, isFirstHappy;
     private float speedArcParam = (float) 0.005;
     private boolean isFirstGav;
     private long startTime;
-    private boolean isStart = true; //начало ли игры
+    public boolean isStart = true; //начало ли игры
 
 
 
@@ -217,7 +217,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         }
         if (isStart){
-           if (System.currentTimeMillis() - startTime <= 10000) {
+           if (System.currentTimeMillis() - startTime <= 15000) {
                canvas.drawText("сон", 20, canvas.getHeight() / 5, paint);
                canvas.drawText("еда", canvas.getWidth() / 4, canvas.getHeight() / 2, paint);
                canvas.drawText("нужда", canvas.getWidth() / 7 * 5, canvas.getHeight() / 5, paint);
@@ -405,16 +405,16 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public int getWhatObject(){
         return whatObject;
     }
-    public void setArcSleep(int arcSleep) { //1
+    public void setArcSleep(float arcSleep) { //1
         this.arcSleep = arcSleep;
     }
-    public void setArcNeed(int arcNeed) { //2
+    public void setArcNeed(float arcNeed) { //2
         this.arcNeed = arcNeed;
     }
-    public void setArcHappy(int arcHappy) { //3
+    public void setArcHappy(float arcHappy) { //3
         this.arcHappy = arcHappy;
     }
-    public void setArcEat(int arcEat) { //4
+    public void setArcEat(float arcEat) { //4
         this.arcEat = arcEat;
     }
 

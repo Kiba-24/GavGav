@@ -220,10 +220,12 @@ public class MathProblemActivity extends AppCompatActivity {
                     }
                     break;
                 case 3:
-                    int min3 = -10; // Начальное значение диапазона - "от"
-                    int max3 = 10; // Конечное значение диапазона - "до"
-                    float a3 = ThreadLocalRandom.current().nextInt(min3, max3 + 1);
+                    int min3 = -100; // Начальное значение диапазона - "от"
+                    int max3 = 100; // Конечное значение диапазона - "до"
+                    float a3 = ThreadLocalRandom.current().nextInt(min3, max3 + 1) ;
                     float b3 = ThreadLocalRandom.current().nextInt(min3, max3 + 1);
+                    a3 = a3 / 10;
+                    b3 = b3 / 10;
                     a3 = (float) round(a3, 1);
                     b3 = (float) round(b3, 1);
                     int z3 = min3 + (int) (Math.random() * max3);
